@@ -3,6 +3,7 @@ let search = document.querySelector('.search')
 // let h3=document.querySelector('h3')
 let container = document.querySelector('.products')
 window.cart = cart;
+window.DeleteFromCart = DeleteFromCart;
 
 show(products);
 search.addEventListener('input', function () {
@@ -45,4 +46,12 @@ function show(arr) {
     arr.unshift(product);
 
     localStorage.setItem("cart", JSON.stringify(arr));
+    show(products);
+    search.value=''
+}function DeleteFromCart(id) {
+    let cart = JSON.parse(localStorage.getItem("cart"))
+    cart = cart.filter(item => item.id !== id);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    show(products);
+    search.value=''
 }
