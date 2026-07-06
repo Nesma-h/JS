@@ -4,8 +4,10 @@ let search = document.querySelector('.search')
 let container = document.querySelector('.products')
 let CartContainer = document.querySelector('.CartProduct')
 let cartProducts = JSON.parse(localStorage.getItem("cart")) || [];
+const select = document.querySelector("select");
 window.cart = cart;
 window.DeleteFromCart = DeleteFromCart;
+
 
 if (container) {
     show(products);
@@ -14,12 +16,39 @@ if (container) {
         let filterdproduct = products.filter(prod =>
             prod.name.toLowerCase().includes(search.value.toLowerCase().trim())
         );
-
+        select.value="ALL";
         show(filterdproduct);
     });
+    selectValues();
+    select.addEventListener("change", function () {
+        search.value = ''
+    if (this.value === "ALL") {
+        show(products);
+        return;
+    }
+
+    const filtered = products.filter(product =>
+        product.category === this.value
+    );
+
+    show(filtered);
+    
+});
 }
 if (CartContainer) {
     showinCart(cartProducts);
+}
+
+function selectValues(){
+    const categories = [...new Set(products.map(product => product.category))];
+
+categories.forEach(category => {
+    select.innerHTML += `
+        <option value="${category}">
+            ${category}
+        </option>
+    `;
+});
 }
 function show(arr) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
