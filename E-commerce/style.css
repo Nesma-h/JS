@@ -37,6 +37,7 @@
     justify-content: center;
     border-bottom: brown solid 2px;
     padding-bottom: 10px;
+    gap: 30px;
 }
 .product{
     display: flex;

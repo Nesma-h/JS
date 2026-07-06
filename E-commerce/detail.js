@@ -3,7 +3,11 @@ import products from "./data.js";
 const id = Number(new URLSearchParams(location.search).get("id"));
 let product = products.find(item => item.id == id)
 let container = document.querySelector('.product');
+if(product){
 show(product);
+}else{
+    showErr();
+}
 console.log(product)
 function show(element) {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -12,11 +16,12 @@ function show(element) {
         <div class='data'>
                 <img src=${element.image} alt="">
                 <div class="detail">
-                    <p>Name : <span>${element.name} </span></p>
-                    <p>Category : <span> ${element.category}</span></p>
-                    <p>Price : <span> ${element.price}</span></p>
-                    <p>Stock : <span> ${element.stock}</span></p>
-                    <p>Description : <span> ${element.description}</span></p>
+                <p class='cat' >${element.category}</p>
+                    <p class='name'>${element.name}</p>
+                    <p> ${element.description}</p>
+                    <p class='price'> ${element.price} $ </p>
+                    <p> In The Stock : <span> ${element.stock}</span></p>
+                    
                 </div>
                 </div>
                 <div>
@@ -29,5 +34,13 @@ function show(element) {
         `;
 
     // console.log(container)
+}
+function showErr(){
+    container.innerHTML =`
+    <div class="detail">
+    <p class='err' >Product NOT Found !!</p>
+    <button class='errbutton' onclick="location.href='./index.html'"> Go Back </button>
+    </div>
+    `
 }
 
